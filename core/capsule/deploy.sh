@@ -28,8 +28,8 @@ docker rm -f "$OPEN" "$CLOSED" >/dev/null 2>&1 || true
 
 echo "== Ізоляція процесів =="
 docker run --rm "$IMAGE" bash -c \
-  'echo "Контейнер: PID оболонки = $$, процесів = $(ls -d /proc/[0-9]* | wc -l)"'
-echo "Хост: процесів = $(ls -d /proc/[0-9]* | wc -l)"
+  'echo "Контейнер: PID оболонки = $$, процесів = $(find /proc -maxdepth 1 -name "[0-9]*" | wc -l)"'
+echo "Хост: процесів = $(find /proc -maxdepth 1 -name "[0-9]*" | wc -l)"
 
 echo "== Контейнер БЕЗ -p =="
 docker run -d --name "$CLOSED" "$IMAGE" sleep infinity >/dev/null
